@@ -6,8 +6,10 @@ package mr
 // remember to capitalize all names.
 //
 
-import "os"
-import "strconv"
+import (
+	"os"
+	"strconv"
+)
 
 //
 // example to show how to declare the arguments
@@ -23,7 +25,34 @@ type ExampleReply struct {
 }
 
 // Add your RPC definitions here.
+// Worker --register--> Master --> record the Worker --register ok --> Worker
+type RegisterArgs struct {
+}
 
+type RegisterResult struct {
+	WorkerId int
+}
+
+// Worker --reuqireTask --> Master --> generate a Task -- task --> Worker
+type RequireArgs struct {
+	WorkerId int
+}
+
+type RequireResult struct {
+	Task *Task
+}
+
+// Worker --reportTask--> Master
+// With info of is the task done, the task seq, which type is the task and which worker finishes this task
+type ReportArgs struct {
+	Done     bool
+	Seq      int
+	WorkerId int
+	Type     TaskType
+}
+
+type ReportResult struct {
+}
 
 // Cook up a unique-ish UNIX-domain socket name
 // in /var/tmp, for the master.
